@@ -11,14 +11,15 @@ interface ICreateUserInput {
 }
 
 async function createUser({email,username}: ICreateUserInput): Promise<IUser> {
-    checkInputs({email, username});
-    await checkAccount({email, username});    
-    let activation = makeid(42);
-
-    return User.create({
-        email: email,
-        username: username,
-        activation: activation
+    return checkInputs({email, username})
+    .then(() => checkAccount({email, username}))
+    .then(()=>{
+        let activation = makeid(42);
+        return User.create({
+            email: email,
+            username: username,
+            activation: activation
+        })
     })
     .then((data: IUser) => {
         return data;
@@ -28,30 +29,32 @@ async function createUser({email,username}: ICreateUserInput): Promise<IUser> {
     });
 }
 
-function checkInputs({email,username}: ICreateUserInput){
-    if(username === null || username === undefined){
-        throw new BaseError("Username is invalid", ErrorCodes.USERNAME_INVALID);
+function checkInputs({email,username}: ICreateUserInput): Promise<String>{
+    if(username === null || username === undefined || username.trim().length === 0){
+        return Promise.reject(new BaseError("Username is invalid", ErrorCodes.INVALID_USERNAME));
     }
-    if(email === null || email === undefined){
-        throw new BaseError("This email is invalid", ErrorCodes.INVALID_EMAIL);
+    if(email === null || email === undefined || email.trim().length === 0){
+        return Promise.reject(new BaseError("This email is invalid", ErrorCodes.INVALID_EMAIL));
     }
     email = email.trim();
     username = username.trim();
 
     if(!EmailValidator.validate(email.toString())){
-        throw new BaseError("This email is invalid", ErrorCodes.INVALID_EMAIL);
+        return Promise.reject(new BaseError("This email is invalid", ErrorCodes.INVALID_EMAIL));
     }
+    return Promise.resolve("");
 }
 
-async function checkAccount({email,username}: ICreateUserInput){
+async function checkAccount({email,username}: ICreateUserInput): Promise<String>{
     let sanitizedEmail = sanitizeEmail(email);
     let existingAcount = await User.findOne({$or : [
         { "searchUsername" : username.toLocaleLowerCase() },
         { "searchEmail" : sanitizedEmail }
     ]});
     if(existingAcount != null){
-        throw new BaseError("Username or email already exists", ErrorCodes.EXISTING_ACCOUNT);
+        return Promise.reject(new BaseError("Username or email already exists", ErrorCodes.EXISTING_ACCOUNT));
     }
+    return Promise.resolve("");
 }
 
 function makeid(length:number): String {
