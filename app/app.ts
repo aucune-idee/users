@@ -2,6 +2,12 @@
 
 import express from "express";
 import bodyParser from "body-parser";
+import mongoose from "mongoose";
+
+import restConfigure from './rest';
+import errorHandling from './exceptions/handler';
+
+
 
 class App {
 
@@ -17,6 +23,11 @@ class App {
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
+        restConfigure(this.app);
+        
+
+        mongoose.connect("mongodb+srv://users-admin:"+process.env.MONGODBPWD+"@cluster0-ly07g.gcp.mongodb.net/test?retryWrites=tru", {useNewUrlParser: true});
+        errorHandling(this.app);
     }
 }
 
