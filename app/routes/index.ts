@@ -1,12 +1,11 @@
 import userConfigure from './users.route';
 
-
-import { Application } from "express";
+import Router from 'express-promise-router';
 
 let BASE = "/users";
 
-function configure(app:Application):void{
-    userConfigure(app);
+function configure(router:Router):void{
+    userConfigure(router);
 }
 
 export default configure;

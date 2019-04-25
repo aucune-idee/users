@@ -1,5 +1,6 @@
 //lib/app.ts
 import express from "express";
+import Router from 'express-promise-router';
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import morgan from "morgan";
@@ -23,8 +24,9 @@ class App {
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
-        routesConfigure(this.app);
-        
+        let router:Router = Router();
+        routesConfigure(router);
+        this.app.use(router);
 
         mongoose.connect(configuration.mongodbConnectChain, {useNewUrlParser: true});
         errorHandling(this.app);

@@ -1,23 +1,21 @@
+import Router from 'express-promise-router';
 
-import { Application } from "express";
 import UserController  from "../controllers/user.controller";
 
 let BASE = "/users";
 
-function configure(app:Application):void{
-    app.post(BASE, async  (req, res, next) => {
-        try{
-            const user = await UserController.createUser({
-                username: req.body.username,
-                email: req.body.email
-            });
-            return res.json({ user: user });
-        }catch(err){
-            next(err);
-        }
+function configure(router:Router):void{
+    router.post(BASE, async  (req, res, next) => {
+        return UserController.createUser({
+            username: req.body.username,
+            email: req.body.email
+        })
+        .then(user => {
+            return res.json({ user: user })
+        });
     });
     
-    app.get(BASE, async(req, res, next) =>{
+    router.get(BASE, async(req, res, next) =>{
         res.json({txt:":)"});
     })
 }

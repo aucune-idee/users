@@ -20,12 +20,6 @@ async function createUser({email,username}: ICreateUserInput): Promise<IUser> {
             username: username,
             activation: activation
         })
-    })
-    .then((data: IUser) => {
-        return data;
-    })
-    .catch((error: Error) => {
-        throw error;
     });
 }
 
