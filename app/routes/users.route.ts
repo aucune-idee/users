@@ -8,7 +8,8 @@ function configure(router:Router):void{
     router.post(BASE, async  (req, res, next) => {
         return UserController.createUser({
             username: req.body.username,
-            email: req.body.email
+            email: req.body.email,
+            password: req.body.password
         })
         .then(user => {
             return res.json({ user: user })

@@ -1,12 +1,17 @@
 export enum ErrorCodes{
     INVALID_EMAIL,
     EXISTING_ACCOUNT,
-    INVALID_USERNAME
+    INVALID_USERNAME,
+    INVALID_PASSWORD,
+    INVALID_AUTH
 }
 const httpCodes = new Map();
 httpCodes.set(ErrorCodes.INVALID_EMAIL, 400);
 httpCodes.set(ErrorCodes.EXISTING_ACCOUNT, 409);
 httpCodes.set(ErrorCodes.INVALID_USERNAME, 400);
+httpCodes.set(ErrorCodes.INVALID_PASSWORD, 400);
+httpCodes.set(ErrorCodes.INVALID_AUTH, 401);
+
 
 export class BaseError extends Error {
     constructor(public message: string, public code:ErrorCodes) {

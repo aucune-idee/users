@@ -12,6 +12,13 @@ export interface IUser extends Document {
   
   password: String;
   
+  roles:[
+    {
+      type: String,
+      enum: ["admin", "moderator"]
+    }
+  ]
+
   google: {
     id: String,
     token: String,
@@ -34,6 +41,7 @@ export var UserSchema: Schema = new Schema({
   searchUsername: String,
   searchEmail: String,
   password: String,
+  roles:[String],
   google: {
     id: String,
     token: String,

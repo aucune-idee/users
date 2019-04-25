@@ -6,5 +6,13 @@ let mongodbConnectChain =
 export default {
     env : env,
     port: process.env.PORT ? process.env.PORT : 3000,
-    mongodbConnectChain : mongodbConnectChain
+    mongodbConnectChain : mongodbConnectChain,
+    password:{
+        minLength : 10,
+        salt: process.env.N4B_SALT ? process.env.N4B_SALT : "$2b$31$x6EQEgpPTDZZ3VlnM.s6ne"
+    },
+    jwt:{
+        secret: process.env.N4B_JWT_SECRET ? process.env.N4B_JWT_SECRET : "q$qfqza,02aqsv$:§fsqv@fz",
+        ttl:"1h"
+    }
 }

@@ -1,1 +1,1 @@
-export * from './auth.password.auth.controller';
+export * from './auth/password.auth.controller';

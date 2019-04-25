@@ -4,21 +4,27 @@ import {BaseError, ErrorCodes} from '../exceptions/base-error';
 
 import * as EmailValidator from 'email-validator';
 import { sanitizeEmail } from "../utils/email.utils";
+import { hash } from "../utils/password.utils";
+import configuration from "../config";
 
 interface ICreateUserInput {
     email: IUser['email'];
     username: IUser['username'];
+    password?: IUser['password'];
 }
 
-async function createUser({email,username}: ICreateUserInput): Promise<IUser> {
+async function createUser({email,username, password}: ICreateUserInput): Promise<IUser> {
     return checkInputs({email, username})
     .then(() => checkAccount({email, username}))
-    .then(()=>{
+    .then(() => controleAuth(password))
+    .then((hashedPassword)=>{
+        console.log("hash", hashedPassword)
         let activation = makeid(42);
         return User.create({
-            email: email,
-            username: username,
-            activation: activation
+            email: email.trim(),
+            username: username.trim(),
+            activation: activation,
+            password: hashedPassword
         })
     });
 }
@@ -30,7 +36,6 @@ function checkInputs({email,username}: ICreateUserInput): Promise<String>{
     if(email === null || email === undefined || email.trim().length === 0){
         return Promise.reject(new BaseError("This email is invalid", ErrorCodes.INVALID_EMAIL));
     }
-    email = email.trim();
     username = username.trim();
 
     if(!EmailValidator.validate(email.toString())){
@@ -51,6 +56,18 @@ async function checkAccount({email,username}: ICreateUserInput): Promise<String>
     return Promise.resolve("");
 }
 
+async function controleAuth(password:String|undefined): Promise<String>{
+    if(!password || password.trim().length === 0){
+        return Promise.reject(new BaseError("Invalid password", ErrorCodes.INVALID_PASSWORD));
+    }
+    password = password.trim();
+    if(password.length < configuration.password.minLength){
+        return Promise.reject(new BaseError("Invalid password", ErrorCodes.INVALID_PASSWORD));
+    }
+    //return Promise.resolve();
+    return Promise.resolve(hash(password));
+}
+
 function makeid(length:number): String {
     let text:String = "";
     let possible:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-{}\\/!?*<>";
@@ -58,8 +75,6 @@ function makeid(length:number): String {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
 }
-  
-
   
 export default {
     createUser
