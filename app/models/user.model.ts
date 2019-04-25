@@ -9,6 +9,21 @@ export interface IUser extends Document {
 
   searchUsername: String;
   searchEmail: String;
+  
+  password: String;
+  
+  google: {
+    id: String,
+    token: String,
+    email: String,
+    name: String
+  };
+  facebook: {
+    id: String,
+    token: String,
+    email: String,
+    name: String
+  }
 }
 
 export var UserSchema: Schema = new Schema({
@@ -17,7 +32,20 @@ export var UserSchema: Schema = new Schema({
   username: String,
   activation: String,
   searchUsername: String,
-  searchEmail: String
+  searchEmail: String,
+  password: String,
+  google: {
+    id: String,
+    token: String,
+    email: String,
+    name: String
+  },
+  facebook: {
+    id: String,
+    token: String,
+    email: String,
+    name: String
+  }
 });
 UserSchema.pre("save", function(this:IUser, next) {
   let now = new Date();

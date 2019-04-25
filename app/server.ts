@@ -1,7 +1,7 @@
 // lib/server.ts
 import app from "./app";
-const PORT = 3000;
+import configuration from "./config";
 
-app.listen(PORT, () => {
-    console.log('Express server listening on port ' + PORT);
+app.listen(configuration.port, () => {
+    console.log('Express server listening on port ' + configuration.port);
 })

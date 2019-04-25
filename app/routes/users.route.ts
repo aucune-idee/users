@@ -5,7 +5,6 @@ import UserController  from "../controllers/user.controller";
 let BASE = "/users";
 
 function configure(app:Application):void{
-    console.log("confiure rest user");
     app.post(BASE, async  (req, res, next) => {
         try{
             const user = await UserController.createUser({
@@ -17,6 +16,10 @@ function configure(app:Application):void{
             next(err);
         }
     });
+    
+    app.get(BASE, async(req, res, next) =>{
+        res.json({txt:":)"});
+    })
 }
 
 
