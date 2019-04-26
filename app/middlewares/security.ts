@@ -6,7 +6,6 @@ import configuration from '../config';
 import {BaseError, ErrorCodes} from '../exceptions/base-error';
 
 export const logged = () => (req: Request, res: Response, next: NextFunction) => {
-    console.log(req);
     const token = <string>req.headers["authorization"];
 
     try {

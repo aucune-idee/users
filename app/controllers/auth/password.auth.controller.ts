@@ -38,6 +38,7 @@ async function controlePassword({id, password}: IAuthPasswordInput): Promise<IAu
         console.log(user.roles);
         let token = jwt.sign(
             {
+                id: user._id,
                 username: user.username,
                 roles: user.roles 
             },

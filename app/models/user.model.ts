@@ -1,7 +1,9 @@
 import { Document, Schema, Model, model} from "mongoose";
+import autoIncrement from 'mongoose-auto-increment';
 import { sanitizeEmail } from "../utils/email.utils";
 
 export interface IUser extends Document {
+  _id:number;
   createdAt: Date,
   email: String;
   username: String;
@@ -34,6 +36,7 @@ export interface IUser extends Document {
 }
 
 export var UserSchema: Schema = new Schema({
+  _id: Number,
   createdAt: Date,
   email: String,
   username: String,
@@ -66,6 +69,6 @@ UserSchema.pre("save", function(this:IUser, next) {
   next();
 });
 
-
+UserSchema.plugin(autoIncrement.plugin, 'User');
 
 export const User: Model<IUser> = model<IUser>("User", UserSchema);

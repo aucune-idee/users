@@ -13,7 +13,8 @@ interface ICreateUserInput {
     password?: IUser['password'];
 }
 
-async function createUser({email,username, password}: ICreateUserInput): Promise<IUser> {
+
+export async function createUser({email,username, password}: ICreateUserInput): Promise<IUser> {
     return checkInputs({email, username})
     .then(() => checkAccount({email, username}))
     .then(() => controleAuth(password))
@@ -26,6 +27,15 @@ async function createUser({email,username, password}: ICreateUserInput): Promise
             activation: activation,
             password: hashedPassword
         })
+    });
+}
+
+export async function getUser(id:String):Promise<IUser>{
+    return User.findOne({_id:id}).exec().then(user => {
+        if(user){
+            return user;
+        }
+        return Promise.reject();
     });
 }
 
@@ -75,7 +85,3 @@ function makeid(length:number): String {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
 }
-  
-export default {
-    createUser
-};
