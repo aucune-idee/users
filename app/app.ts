@@ -20,7 +20,7 @@ class App {
 
     private config(): void{
         // support application/json type post data
-        this.app.use(morgan("dev"));
+        //this.app.use(morgan("dev"));
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,7 +28,11 @@ class App {
         routesConfigure(router);
         this.app.use(router);
 
-        mongoose.connect(configuration.mongodbConnectChain, {useNewUrlParser: true});
+        mongoose.connect(configuration.mongodbConnectChain, {useNewUrlParser: true})
+        .catch((err)=>{
+            console.error(err);
+            process.exit();
+        });
         errorHandling(this.app);
     }
 }

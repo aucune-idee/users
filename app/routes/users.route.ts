@@ -1,5 +1,7 @@
 import Router from 'express-promise-router';
 
+import {logged, auth} from '../middlewares/security';
+
 import UserController  from "../controllers/user.controller";
 
 let BASE = "/users";
@@ -16,7 +18,7 @@ function configure(router:Router):void{
         });
     });
     
-    router.get(BASE, async(req, res, next) =>{
+    router.get(BASE, logged(), async(req, res, next) =>{
         res.json({txt:":)"});
     })
 }
