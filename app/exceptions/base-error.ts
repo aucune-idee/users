@@ -15,7 +15,7 @@ httpCodes.set(ErrorCodes.INVALID_AUTH, 401);
 
 export class BaseError extends Error {
     
-    public const isBaseError = true;
+    public readonly isBaseError = true;
     
     constructor(public message: string, public code:ErrorCodes) {
         super();

@@ -12,7 +12,7 @@ else {
 }
 let secret = require('./secret'+env+'.json');
 
-let conf = {
+let conf:any = {
     port: process.env.PORT ? process.env.PORT : 3000,
     
     password:{

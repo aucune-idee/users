@@ -3,7 +3,6 @@ import express from "express";
 import Router from 'express-promise-router';
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import autoIncrement from 'mongoose-auto-increment';
 import morgan from "morgan";
 
 import configuration from "./config";
@@ -22,7 +21,6 @@ class App {
         
         mongoose.connect(configuration.mongodbConnectChain, {useNewUrlParser: true})
         .then(() => {
-            autoIncrement.initialize(mongoose.connection);
             this.configRoutes();
         })
         .catch((err)=>{

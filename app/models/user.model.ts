@@ -1,5 +1,5 @@
 import { Document, Schema, Model, model} from "mongoose";
-import autoIncrement from 'mongoose-auto-increment';
+import {MongooseAutoIncrementID} from 'mongoose-auto-increment-reworked';
 import { sanitizeEmail } from "../utils/email.utils";
 
 export interface IUser extends Document {
@@ -69,6 +69,6 @@ UserSchema.pre("save", function(this:IUser, next) {
   next();
 });
 
-UserSchema.plugin(autoIncrement.plugin, 'User');
+UserSchema.plugin(MongooseAutoIncrementID.plugin, {modelName:'User'});
 
 export const User: Model<IUser> = model<IUser>("User", UserSchema);
