@@ -1,16 +1,6 @@
 let env = process.env.NODE_ENV ? process.env.NODE_ENV.trim() : "local";
 
-if(!['local', 'development'].includes(env)){
-    process.exit(1);
-}
-console.log(env);
-if(env != "local"){
-    env = "";
-}
-else {
-    env = "-"+env;
-}
-let secret = require('./secret'+env+'.json');
+let secret = require('./secret'+(env == "local" ? "-local" : "")+'.json');
 
 let conf:any = {
     port: process.env.PORT ? process.env.PORT : 3000,
