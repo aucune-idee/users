@@ -1,6 +1,7 @@
 build/*
 mongod
 data
+secret.json
 
 # Logs
 logs

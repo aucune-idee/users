@@ -1,18 +1,35 @@
-let env = process.env.NODE_ENV ? process.env.NODE_ENV : "local";
-let mongodbConnectChain =
-    env == 'dc' ? 'mongodb+srv://users-admin:'+process.env.MONGODBPWD+'@cluster0-ly07g.gcp.mongodb.net/test?retryWrites=tru' :
-    'mongodb://'+(process.env.IP && false ? process.env.IP : "localhost")+':27017/data';
-    
-export default {
-    env : env,
+let env = process.env.NODE_ENV ? process.env.NODE_ENV.trim() : "local";
+
+if(!['local', 'development'].includes(env)){
+    process.exit(1);
+}
+console.log(env);
+if(env != "local"){
+    env = "";
+}
+else {
+    env = "-"+env;
+}
+let secret = require('./secret'+env+'.json');
+
+let conf = {
     port: process.env.PORT ? process.env.PORT : 3000,
-    mongodbConnectChain : mongodbConnectChain,
+    
     password:{
         minLength : 10,
-        salt: process.env.N4B_SALT ? process.env.N4B_SALT : "$2b$31$x6EQEgpPTDZZ3VlnM.s6ne"
-    },
-    jwt:{
-        secret: process.env.N4B_JWT_SECRET ? process.env.N4B_JWT_SECRET : "q$qfqza,02aqsv$:§fsqv@fz",
-        ttl:"1h"
     }
+};
+
+function merge(a:any, b:any){
+    for(let key in b){
+        if(!a.hasOwnProperty(key) || !(b[key] instanceof Object)){
+            a[key] = b[key];
+        }else{
+            a[key] = merge(a[key], b[key]);
+        }
+    }
+    return a;
 }
+conf = merge(conf, secret);
+ 
+export default conf;

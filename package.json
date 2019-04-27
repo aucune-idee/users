@@ -6,13 +6,12 @@
   "scripts": {
     "tsc": "tsc",
     "build": "tsc",
-    "dev": "NODE_ENV=local && npm run run_dev",
-    "dev_windows": "set NODE_ENV=production && npm run run_dev",
-    "run_dev": "ts-node-dev --respawn --transpileOnly ./app/server.ts",
+    "dev": "ts-node-dev --respawn --transpileOnly ./app/server.ts",
     "dc": "NODE_ENV=dc ts-node-dev --respawn --transpileOnly ./app/server.ts",
     "prod": "tsc && node ./build/server.js",
     "test": "jest",
-    "test-coverage": "jest --coverage"
+    "test-coverage": "jest --coverage",
+    "start": ""
   },
   "repository": {
     "type": "git",
