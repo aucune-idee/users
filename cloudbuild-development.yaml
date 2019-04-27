@@ -1,15 +1,15 @@
 steps:
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['install']
 - name: gcr.io/cloud-builders/gcloud
   args:
   - kms
   - decrypt
-  - --ciphertext-file=./app/secrets-development.json.enc
-  - --plaintext-file=./app/secrets.json
+  - --ciphertext-file=./app/secret-development.json.enc
+  - --plaintext-file=./app/secret.json
   - --location=global
   - --keyring=n4b-keyring
   - --key=n4b-key
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
 - name: 'gcr.io/cloud-builders/npm'
   args: ['build']
 - name: 'gcr.io/cloud-builders/npm'
