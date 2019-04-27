@@ -5,6 +5,7 @@
   "main": "app/server.ts",
   "scripts": {
     "tsc": "tsc",
+    "build": "tsc",
     "dev": "NODE_ENV=local && npm run run_dev",
     "dev_windows": "set NODE_ENV=production && npm run run_dev",
     "run_dev": "ts-node-dev --respawn --transpileOnly ./app/server.ts",
