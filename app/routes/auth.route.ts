@@ -1,10 +1,10 @@
-import Router from 'express-promise-router';
+import { Request, Response, Router } from 'express';
 import {authWithPassword, IAuthPasswordOutput}  from "../controllers/auth.controller";
 
 let BASE = "/auth";
 
 function configure(router:Router):void{
-    router.post(BASE, async  (req, res) => {
+    router.post(BASE, async  (req:Request, res: Response) => {
         return authWithPassword({
             id: req.body.id,
             password: req.body.password

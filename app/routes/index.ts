@@ -1,7 +1,7 @@
 import userConfigure from './users.route';
 import authConfigure from './auth.route';
 
-import Router from 'express-promise-router';
+import { Router } from 'express';
 
 
 function configure(router:Router):void{

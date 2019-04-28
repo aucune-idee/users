@@ -34,7 +34,7 @@ class App {
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
-        let router:Router = Router();
+        let router:express.Router = Router();
         
         import('./routes').then(configure => configure.default(router));
         this.app.use(router);

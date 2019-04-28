@@ -24,7 +24,7 @@ export const logged = () => (req: Request, res: Response, next: NextFunction) =>
 
 export const auth = (input:String | Array<String>) => {
     let roles:Array<String>;
-    if(roles instanceof String){
+    if(input instanceof String){
         roles =  [<String>input];
     }
     else{

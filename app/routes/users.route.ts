@@ -1,13 +1,12 @@
-import Router from 'express-promise-router';
-
-import {logged, auth} from '../middlewares/security';
+import { Request, Response, Router } from 'express';
+import {logged} from '../middlewares/security';
 
 import { createUser, getUser }  from "../controllers/user.controller";
 
 let BASE = "/users";
 
 function configure(router:Router):void{
-    router.post(BASE, async  (req, res, next) => {
+    router.post(BASE, async  (req:Request, res:Response) => {
         return createUser({
             username: req.body.username,
             email: req.body.email,
@@ -17,10 +16,10 @@ function configure(router:Router):void{
             return res.json({ user: user })
         });
     })
-    .get(BASE, logged(), async(req, res, next) =>{
+    .get(BASE, logged(), async(req:Request, res:Response) =>{
         res.json({txt:":)"});
     })
-    .get(BASE+"/profil/:id", logged(), async (req, res, next) => {
+    .get(BASE+"/profil/:id", logged(), async (req:Request, res:Response) => {
         return getUser(req.params.id)
         .then((user) => {
             delete user['email'];
@@ -31,7 +30,7 @@ function configure(router:Router):void{
             res.json(user);
         })
     })
-    .get(BASE+"/profil", logged(), async (req, res, next) => {
+    .get(BASE+"/profil", logged(), async (req:Request, res:Response) => {
         return getUser(res.locals.jwt.payload.id).then((user) => {
             res.json(user);
         });
