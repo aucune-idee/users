@@ -5,13 +5,12 @@
   "main": "app/server.ts",
   "scripts": {
     "tsc": "tsc",
-    "build": "tsc",
+    "build": "tsc && cp app.yaml ./build && cp package.json ./build",
     "dev": "ts-node-dev --respawn --transpileOnly ./app/server.ts",
-    "dc": "NODE_ENV=dc ts-node-dev --respawn --transpileOnly ./app/server.ts",
     "prod": "tsc && node ./build/server.js",
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "start": "node ./build/server.js"
+    "start": "node ./server.js"
   },
   "repository": {
     "type": "git",
