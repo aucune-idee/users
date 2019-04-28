@@ -11,11 +11,9 @@ steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
 - name: 'gcr.io/cloud-builders/npm'
-  args: ['build']
+  args: ['run', 'build']
 - name: 'gcr.io/cloud-builders/npm'
-  args: ['test']
-- name: 'ubuntu'
-  args: ['ls', '-al']
+  args: ['t']
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy", "--no-promote", "./build/app.yaml"]
 timeout: "1600s"
