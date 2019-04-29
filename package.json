@@ -17,7 +17,7 @@
     "test-coverage": "jest --coverage",
     "start": "npm run compile && node ./build/server.js",
     "compile": "npm run clean && tsc",
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./dist"
   },
   "repository": {
     "type": "git",
