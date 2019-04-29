@@ -9,6 +9,7 @@
   "scripts": {
     "prepare": "npm run gcp-build",
     "pretest": "npm run gcp-build",
+    "gcp-build": "tsc -p .",
     "tsc": "tsc",
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly ./app/server.ts",
