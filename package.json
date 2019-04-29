@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "n4b project's users services",
   "main": "app/server.ts",
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "scripts": {
     "prepare": "npm run gcp-build",
     "pretest": "npm run gcp-build",
@@ -12,8 +15,9 @@
     "prod": "tsc && node ./build/server.js",
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "start": "node ./build/server.js",
-    "gcp-build": "tsc -p ."
+    "start": "npm run compile && node ./build/server.js",
+    "compile": "npm run clean && tsc",
+    "clean": "rimraf ./dist",
   },
   "repository": {
     "type": "git",
