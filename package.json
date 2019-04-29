@@ -4,13 +4,16 @@
   "description": "n4b project's users services",
   "main": "app/server.ts",
   "scripts": {
+    "prepare": "npm run gcp-build",
+    "pretest": "npm run gcp-build",
     "tsc": "tsc",
-    "build": "tsc && cp app.yaml ./build && cp package.json ./build",
+    "build": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly ./app/server.ts",
     "prod": "tsc && node ./build/server.js",
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "start": "node ./server.js"
+    "start": "node ./build/server.js",
+    "gcp-build": "tsc -p ."
   },
   "repository": {
     "type": "git",
