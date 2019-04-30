@@ -7,18 +7,13 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "prepare": "npm run gcp-build",
-    "pretest": "npm run gcp-build",
-    "gcp-build": "tsc -p .",
     "tsc": "tsc",
-    "build": "tsc",
+    "build": "rimraf build/ && tsc && cp app.yaml build/ && cp package.json build/ && cp app/secret.json build/app",
     "dev": "ts-node-dev --respawn --transpileOnly ./app/server.ts",
     "prod": "tsc && node ./build/server.js",
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "start": "npm run compile && node ./build/server.js",
-    "compile": "npm run clean && tsc",
-    "clean": "rimraf ./dist"
+    "start": "node ./app/server.js"
   },
   "repository": {
     "type": "git",
