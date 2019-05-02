@@ -2,6 +2,10 @@
   "name": "users",
   "version": "0.0.1",
   "description": "n4b project's users services",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/aucune-idee/users"
+  },
   "main": "app/server.ts",
   "engines": {
     "node": ">=8.0.0"
@@ -13,7 +17,7 @@
     "prod": "tsc && node ./build/server.js",
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "start": "node ./app/server.js"
   },
   "repository": {
