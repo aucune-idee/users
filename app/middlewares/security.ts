@@ -6,7 +6,7 @@ import configuration from '../config';
 import {BaseError, ErrorCodes} from '../exceptions/base-error';
 
 export const logged = () => (req: Request, res: Response, next: NextFunction) => {
-    const token = <string>req.headers["authorization"];
+    const token = <string>req.headers["authorization"].replace('Bearer ', '');
 
     try {
         let payload = <any>jwt.verify(token, configuration.jwt.secret);
