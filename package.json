@@ -34,6 +34,7 @@
   "homepage": "https://github.com/aucune-idee/users#readme",
   "dependencies": {
     "body-parse": "^0.1.0",
+    "cors": "^2.8.5",
     "email-validator": "^2.0.4",
     "express": "^4.16.4",
     "express-promise-router": "^3.0.3",
