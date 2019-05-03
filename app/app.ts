@@ -1,5 +1,6 @@
 //lib/app.ts
 import express from "express";
+import cors from 'cors';
 import Router from 'express-promise-router';
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
@@ -30,6 +31,15 @@ class App {
     }
     private configRoutes():void{
           // support application/json type post data
+          this.app.use(cors({
+            origin: function (origin, callback) {
+                if (configuration.cors.indexOf(origin) !== -1) {
+                    callback(null, true)
+                } else {
+                    callback(new Error('Not allowed by CORS'))
+                }
+            }
+          }));
         this.app.use(morgan("tiny"));
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
