@@ -32,8 +32,7 @@ class App {
     private configRoutes():void{
           // support application/json type post data
           this.app.use(cors({
-            origin: function (origin, callback) {
-                console.log(configuration.cors, origin);
+            origin: function (origin:any, callback:any) {
                 if (configuration.cors.indexOf(origin) !== -1) {
                     callback(null, true)
                 } else {
