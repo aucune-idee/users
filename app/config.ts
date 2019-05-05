@@ -7,8 +7,7 @@ let conf:any = {
     
     password:{
         minLength : 10,
-    },
-    cors:["https://n4b-dev.appspot.com", "https://n4b-dev-users-kamule42.c9users.io"]
+    }
 };
 
 function merge(a:any, b:any){
