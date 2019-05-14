@@ -26,7 +26,6 @@ function configure(router:Router):void{
             return user;
         })
         .then((user) => {
-            console.log(user);
             res.json(user);
         })
     })

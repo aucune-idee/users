@@ -35,7 +35,6 @@ async function controlePassword({id, password}: IAuthPasswordInput): Promise<IAu
         if(!user){
             return Promise.reject(new BaseError("Auth failed", ErrorCodes.INVALID_AUTH));
         }
-        console.log(user.roles);
         let token = jwt.sign(
             {
                 id: user._id,

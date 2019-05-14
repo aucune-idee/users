@@ -19,7 +19,6 @@ export async function createUser({email,username, password}: ICreateUserInput): 
     .then(() => checkAccount({email, username}))
     .then(() => controleAuth(password))
     .then((hashedPassword)=>{
-        console.log("hash", hashedPassword)
         let activation = makeid(42);
         return User.create({
             email: email.trim(),
