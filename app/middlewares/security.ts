@@ -24,7 +24,6 @@ export const logged = () => (req: Request, res: Response, next: NextFunction) =>
         }
         res.locals.jwt.payload = payload;
     } catch (error) {
-        console.error(error);
         return next(new BaseError("Auth failed", ErrorCodes.INVALID_AUTH));
     }
     

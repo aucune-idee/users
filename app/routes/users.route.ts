@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import {logged} from '../middlewares/security';
 
-import { createUser, getUser }  from "../controllers/user.controller";
+import { createUser, getUser, getUsers }  from "../controllers/user.controller";
 
 let BASE = "/users";
 
@@ -15,11 +15,8 @@ function configure(router:Router):void{
         .then(user => {
             return res.json({ user: user })
         });
-    })
-    .get(BASE, logged(), async(req:Request, res:Response) =>{
-        res.json({txt:":)"});
-    })
-    .get(BASE+"/profil/:id", logged(), async (req:Request, res:Response) => {
+    });
+    router.get(BASE+"/profil/:id", logged(), async (req:Request, res:Response) => {
         return getUser(req.params.id)
         .then((user) => {
             delete user['email'];
@@ -29,12 +26,17 @@ function configure(router:Router):void{
             res.json(user);
         })
     })
-    .get(BASE+"/profil", logged(), async (req:Request, res:Response) => {
+    router.get(BASE+"/profil", logged(), async (req:Request, res:Response) => {
         return getUser(res.locals.jwt.payload.id).then((user) => {
             res.json(user);
         });
-    });
+    })
+    router.get(BASE+"/:ids:(\d(;\d)+)", async(req:Request, res:Response) =>{
+        getUsers(req.params.ids.split(';')).then(users => res.json(users));
+    })
+    router.get(BASE+"/:id", async(req:Request, res:Response) =>{
+        getUser(req.params.id).then(user => res.json(user));
+    })
 }
-
 
 export default configure;

@@ -33,8 +33,7 @@ class App {
           // support application/json type post data
           this.app.use(cors({
             origin: function (origin:any, callback:any) {
-                console.log(configuration.cors, origin);
-                if (configuration.cors.indexOf(origin) !== -1) {
+                if (configuration.cors.indexOf(origin) !== -1 || origin == null) {
                     callback(null, true)
                 } else {
                     callback(new Error('Not allowed by CORS'))

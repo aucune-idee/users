@@ -1,4 +1,4 @@
-import {User, IUser } from '../models/user.model';
+import {User, IUser, c, IPrivateUser } from '../models/user.model';
 
 import {BaseError, ErrorCodes} from '../exceptions/base-error';
 
@@ -33,6 +33,24 @@ export async function getUser(id:String):Promise<IUser>{
     return User.findOne({_id:id}).exec().then(user => {
         if(user){
             return user;
+        }
+        return Promise.reject();
+    });
+}
+
+export async function getUsers(ids:Array<String>):Promise<IPrivateUser[]>{
+    return User.find({
+        $or:ids.map(i => {return {_id:i}})
+    })
+    .then(users => {
+        if(users != null && users != undefined){
+            return users.map(user => {
+                return {
+                    _id:user._id,
+                    username: user.username,
+                    createdAt: user.createdAt
+                }
+            });
         }
         return Promise.reject();
     });

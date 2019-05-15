@@ -35,6 +35,12 @@ export interface IUser extends Document {
   }
 }
 
+export interface IPrivateUser{
+  _id:IUser["id"]
+  username: IUser["username"];
+  createdAt: IUser["createdAt"];
+}
+
 export var UserSchema: Schema = new Schema({
   _id: Number,
   createdAt: Date,

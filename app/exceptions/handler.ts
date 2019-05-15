@@ -6,6 +6,8 @@ let BASE = "/users";
 function configure(app:Application):void{
     console.log("Error handling");
     app.use((err:any, req:Request, res:Response, next:NextFunction) => {
+        console.log(err);
+        console.log(req.url)
         if(err.isBaseError){
             return handleBaseError(err, res);
         }
