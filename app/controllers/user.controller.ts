@@ -1,4 +1,4 @@
-import {User, IUser, c, IPrivateUser } from '../models/user.model';
+import {User, IUser, IPrivateUser } from '../models/user.model';
 
 import {BaseError, ErrorCodes} from '../exceptions/base-error';
 
