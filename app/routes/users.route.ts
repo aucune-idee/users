@@ -31,11 +31,13 @@ function configure(router:Router):void{
             res.json(user);
         });
     })
-    router.get(BASE+"/:ids:(\d(;\d)+)", async(req:Request, res:Response) =>{
-        getUsers(req.params.ids.split(';')).then(users => res.json(users));
-    })
     router.get(BASE+"/:id", async(req:Request, res:Response) =>{
-        getUser(req.params.id).then(user => res.json(user));
+        if(req.params.id.includes("-")){
+            getUsers(req.params.id.split('-')).then(users => res.json(users));
+        }
+        else{
+            getUser(req.params.id).then(user => res.json(user));
+        }
     })
 }
 

@@ -39,6 +39,7 @@ export async function getUser(id:String):Promise<IUser>{
 }
 
 export async function getUsers(ids:Array<String>):Promise<IPrivateUser[]>{
+    console.log(ids);
     return User.find({
         $or:ids.map(i => {return {_id:i}})
     })
