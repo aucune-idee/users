@@ -3,8 +3,8 @@ steps:
   args:
   - kms
   - decrypt
-  - --ciphertext-file=./app/secret-development.json.enc
-  - --plaintext-file=./app/secret.json
+  - --ciphertext-file=./app/config/secret-development.json.enc
+  - --plaintext-file=./app/config/secret.json
   - --location=global
   - --keyring=n4b-keyring
   - --key=n4b-key
