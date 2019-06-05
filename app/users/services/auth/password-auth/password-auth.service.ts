@@ -19,7 +19,9 @@ export class PasswordAuthService {
         private passwordutils:PasswordUtilsService,
         private config:ConfigService,
         @InjectModel(UserCollectionName)
-        private readonly userModel: Model<IUser>){}
+        private readonly userModel: Model<IUser>){
+            console.log(userModel);
+        }
 
     public async auth(input:AuthDto):Promise<AuthOutputDto>{
         return this.checkInputs(input)
