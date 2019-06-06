@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import jwt from 'jsonwebtoken'
+
+import { sign }  from 'jsonwebtoken'
 
 import { IUser } from '../../../interfaces/user.interface';
 import { UserCollectionName } from '../../../schemas/user.schema';
@@ -20,38 +21,37 @@ export class PasswordAuthService {
         private config:ConfigService,
         @InjectModel(UserCollectionName)
         private readonly userModel: Model<IUser>){
-            console.log(userModel);
         }
 
     public async auth(input:AuthDto):Promise<AuthOutputDto>{
         return this.checkInputs(input)
-        .then(this.controlePassword);
+        .then((i) => this.controlePassword(i));
 
     }
-    private async checkInputs({id, password}: AuthDto): Promise<AuthDto>{
-        if(id === null || id === undefined || id.trim().length === 0){
+    private async checkInputs(input: AuthDto): Promise<AuthDto>{
+        if(input.id === null || input.id === undefined || input.id.trim().length === 0){
             throw new BasicException(ERRORS.INVALID_USERNAME)
         }
-        if(password === null || password === undefined || password.trim().length === 0){
+        if(input.password === null || input.password === undefined || input.password.trim().length === 0){
             throw new BasicException(ERRORS.INVALID_PASSWORD)
         }
-        return Promise.resolve({id, password});
+        return Promise.resolve(input);
     }
     
-    private async controlePassword({id, password}: AuthDto): Promise<AuthOutputDto>{
+    private async controlePassword(input: AuthDto): Promise<AuthOutputDto>{
         return this.userModel.findOne({
             $and:[
                 {$or: [
-                    {"searchUsername": id.trim().toLowerCase()},{"searchEmail": id.trim().toLowerCase()}]
+                    {"searchUsername": input.id.trim().toLowerCase()},{"searchEmail": input.id.trim().toLowerCase()}]
                 },
-                {"password": this.passwordutils.hash(password)}
+                {"password": this.passwordutils.hash(input.password)}
             ]
         })
         .then((user:IUser|null) => {
             if(!user){
                 throw new BasicException(ERRORS.INVALID_AUTH)
             }
-            let token = jwt.sign(
+            let token = sign(
                 {
                     id: user._id,
                     username: user.username,

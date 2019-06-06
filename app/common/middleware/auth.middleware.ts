@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import * as jwt from 'jsonwebtoken';
+import { verify }from 'jsonwebtoken';
 
 import { ConfigService } from "../../config/config.service";
 
@@ -19,7 +19,7 @@ export class AuthMiddleware implements NestMiddleware {
     }
     const token = <string>auth.replace('Bearer ', '');
     try {
-        let payload = <any>jwt.verify(token, this.configuration.envConfig.jwt.secret);
+        let payload = <any>verify(token, this.configuration.envConfig.jwt.secret);
         if(!req.jwt){
             req.jwt = {};
         }
