@@ -26,17 +26,16 @@ export class GetusersService {
     public async getUsers(ids:Array<String>):Promise<IPrivateUser[]>{
         console.log("get ids", ids)
         return this.userModel.find({
-            $or:ids.map(i => {return {_id:i}})
+            $or:ids.map(i => ({_id:i}))
         })
         .then(users => {
+            console.log("finded users", users)
             if(users != null && users != undefined){
-                return users.map(user => {
-                    return {
-                        _id:user._id,
-                        username: user.username,
-                        createdAt: user.createdAt
-                    }
-                });
+                return users.map(user => ({
+                    _id:user._id,
+                    username: user.username,
+                    createdAt: user.createdAt
+                }));
             }
             return Promise.reject();
         });
