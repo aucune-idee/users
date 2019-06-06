@@ -24,6 +24,7 @@ export class GetusersService {
     }
     
     public async getUsers(ids:Array<String>):Promise<IPrivateUser[]>{
+        console.log("get ids", ids)
         return this.userModel.find({
             $or:ids.map(i => {return {_id:i}})
         })

@@ -40,9 +40,11 @@ export class UsersController {
     @UseGuards(AuthGuard)
     async getUsers(@Param('id') id:String){
       if(id.includes("-")){
-          this.findUsers.getUsers(id.split('-'));
+        console.log("ids : ", id)
+        this.findUsers.getUsers(id.split('-'));
       }
       else{
+        console.log("id : ", id)
         this.getProfil(+id);
       }
     }
