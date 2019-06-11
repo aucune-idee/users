@@ -1,4 +1,5 @@
-import * as mongoose from "mongoose";
+import {Schema } from "mongoose";
+import { MongooseAutoIncrementID } from 'mongoose-auto-increment-reworked';
 
 import { IUser } from '../interfaces/user.interface';
 
@@ -6,7 +7,7 @@ import { EmailUtilsService } from "../../shared/services/email-utils/email-utils
 
 export const UserCollectionName = "User";
 
-export const UserSchema: mongoose.Schema = new mongoose.Schema({
+const UserSchema: Schema = new Schema({
   _id: Number,
   createdAt: Date,
   email: String,
@@ -38,10 +39,12 @@ export const UserSchema: mongoose.Schema = new mongoose.Schema({
   this.searchUsername = this.username.toLocaleLowerCase();
   this.searchEmail = EmailUtilsService.sanitizeEmail(this.email);
   console.log(this);
+
   return next();
 })
 .post("save", function(doc){
   console.log("doc", doc);
 })
-//.plugin(AutoIncrement, {inc_field: '_id'});
+.plugin(MongooseAutoIncrementID.plugin, {modelName: UserCollectionName})
  
+export { UserSchema };
