@@ -17,7 +17,6 @@ export class UsersController {
       private findUsers:GetUsersService){}
     
     @Post()
-    @UseGuards(AuthGuard)
     async addUser(@Body() input: CreateUserDto) {
       return this.createUser.create(input);
     }

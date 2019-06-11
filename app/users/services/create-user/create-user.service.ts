@@ -30,11 +30,16 @@ export class CreateUserService {
         .then(() => this.controleAuth(input))
         .then((hashedPassword)=>{
             let activation = this.makeid(42);
+            console.log(hashedPassword)
             return this.userModel.create({
                 email: input.email.trim(),
                 username: input.username.trim(),
                 activation: activation,
                 password: hashedPassword
+            })
+            .catch(error => {
+                console.error(error);
+                throw error;
             })
         });
     }

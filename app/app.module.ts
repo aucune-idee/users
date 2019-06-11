@@ -12,7 +12,7 @@ import { ConfigModule } from './config/config.module';
     imports: [ConfigModule],
     inject: [ConfigService],
     useFactory: async (configService: ConfigService) => ({
-      uri: configService.envConfig.mongodbConnectChain,
+      uri: configService.envConfig.mongodbConnectChain
     })
   }), UsersModule, SharedModule, ConfigModule],
   controllers: []
