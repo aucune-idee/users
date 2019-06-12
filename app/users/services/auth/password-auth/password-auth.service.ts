@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectModel } from 'nestjs-typegoose';
+import { ModelType } from 'typegoose';
 
 import { sign }  from 'jsonwebtoken'
 
 import { IUser } from '../../../interfaces/user.interface';
-import { UserCollectionName } from '../../../schemas/user.schema';
+import { User } from '../../../schemas/user.schema';
 
 import { PasswordUtilsService } from "../../../../shared/services/password-utils/password-utils.service";
 import { ConfigService } from "../../../../config/config.service";
@@ -19,8 +19,8 @@ export class PasswordAuthService {
     constructor(
         private passwordutils:PasswordUtilsService,
         private config:ConfigService,
-        @InjectModel(UserCollectionName)
-        private readonly userModel: Model<IUser>){
+        @InjectModel(User)
+        private readonly userModel: ModelType<User>){
         }
 
     public async auth(input:AuthDto):Promise<AuthOutputDto>{
@@ -47,7 +47,7 @@ export class PasswordAuthService {
                 {"password": this.passwordutils.hash(input.password)}
             ]
         })
-        .then((user:IUser|null) => {
+        .then((user:User|null) => {
             if(!user){
                 throw new BasicException(ERRORS.INVALID_AUTH)
             }

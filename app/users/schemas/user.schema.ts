@@ -1,5 +1,7 @@
-import {Schema } from "mongoose";
-import { MongooseAutoIncrementID } from 'mongoose-auto-increment-reworked';
+import { prop, Typegoose, pre, plugin } from 'typegoose';
+import { IsString, IsInt } from 'class-validator';
+
+import { AutoIncrement } from '../../shared/schemas/sequence-id';
 
 import { IUser } from '../interfaces/user.interface';
 
@@ -7,30 +9,7 @@ import { EmailUtilsService } from "../../shared/services/email-utils/email-utils
 
 export const UserCollectionName = "User";
 
-const UserSchema: Schema = new Schema({
-  _id: Number,
-  createdAt: Date,
-  email: String,
-  username: String,
-  activation: String,
-  searchUsername: String,
-  searchEmail: String,
-  password: String,
-  roles:[String],
-  google: {
-    id: String,
-    token: String,
-    email: String,
-    name: String
-  },
-  facebook: {
-    id: String,
-    token: String,
-    email: String,
-    name: String
-  }
-})
-.pre("save", async function(this:IUser, next){
+@pre<User>('save', async function(next) {
   let now = new Date();
   if (!this.createdAt) {
     this.createdAt = now;
@@ -38,13 +17,52 @@ const UserSchema: Schema = new Schema({
 
   this.searchUsername = this.username.toLocaleLowerCase();
   this.searchEmail = EmailUtilsService.sanitizeEmail(this.email);
-  console.log(this);
 
-  return next();
+  this._id = await AutoIncrement(UserCollectionName)
+  next();
 })
-.post("save", function(doc){
-  console.log("doc", doc);
-})
-.plugin(MongooseAutoIncrementID.plugin, {modelName: UserCollectionName})
- 
-export { UserSchema };
+export class User extends Typegoose {
+  @IsInt()
+  @prop()
+  _id: Number;
+  @prop()
+  createdAt: Date;
+  
+  @prop()
+  email: String;
+  
+  @prop()
+  username: String;
+  
+  @prop()
+  activation: String;
+  
+  @prop()
+  searchUsername: String;
+  
+  @prop()
+  searchEmail: String;
+  
+  @prop()
+  password: String;
+  
+  @prop()
+  roles:[String];
+  
+  @prop()
+  google: {
+    id: String,
+    token: String,
+    email: String,
+    name: String
+  };
+  
+  @prop()
+  facebook: {
+    id: String,
+    token: String,
+    email: String,
+    name: String
+  }
+}
+

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectModel } from 'nestjs-typegoose';
+import { ModelType } from 'typegoose';
 import * as EmailValidator from 'email-validator';
 
 import { ConfigService } from '../../../config/config.service';
@@ -9,7 +9,7 @@ import { EmailUtilsService } from "../../../shared/services/email-utils/email-ut
 import { PasswordUtilsService } from "../../../shared/services/password-utils/password-utils.service";
 
 import { IUser } from '../../interfaces/user.interface';
-import { UserCollectionName } from '../../schemas/user.schema';
+import { User } from '../../schemas/user.schema';
 
 import { CreateUserDto } from '../../dto/create-user';
 
@@ -21,16 +21,15 @@ export class CreateUserService {
         private config:ConfigService,
         private passwordUtils:PasswordUtilsService,
         private emailUtils:EmailUtilsService,
-        @InjectModel(UserCollectionName)
-        private readonly userModel: Model<IUser>){}
+        @InjectModel(User)
+        private readonly userModel: ModelType<User>){}
         
-    public create(input:CreateUserDto): Promise<IUser>{
+    public create(input:CreateUserDto): Promise<User>{
         return this.checkInputs(input)
         .then(() => this.checkAccount(input))
         .then(() => this.controleAuth(input))
         .then((hashedPassword)=>{
             let activation = this.makeid(42);
-            console.log(hashedPassword)
             return this.userModel.create({
                 email: input.email.trim(),
                 username: input.username.trim(),

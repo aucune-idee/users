@@ -36,12 +36,11 @@
     "js-sha512": "^0.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.11",
-    "mongoose-auto-increment": "^5.0.1",
-    "mongoose-auto-increment-reworked": "^1.2.1",
-    "mongoose-sequence": "^5.0.1",
+    "nestjs-typegoose": "^5.2.1",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.3.3",
+    "typegoose": "^5.7.1"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.0.0",

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypegooseModule } from 'nestjs-typegoose';
 import { UsersController } from './controllers/users.controller';
-import { UserSchema, UserCollectionName } from './schemas/user.schema';
+import { User, UserCollectionName } from './schemas/user.schema';
 import { CreateUserService, GetusersService } from './services';
 import { SharedModule } from '../shared/shared.module';
 import { ConfigModule } from '../config/config.module';
@@ -12,7 +12,7 @@ import { PasswordAuthService } from './services/auth/password-auth/password-auth
 
 @Module({
   imports: [SharedModule, ConfigModule,
-     MongooseModule.forFeature([{ name: UserCollectionName, schema: UserSchema }])],
+     TypegooseModule.forFeature([User])],
   controllers: [UsersController, AuthController],
   providers: [CreateUserService, GetusersService, AuthService, PasswordAuthService]
 })

@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectModel } from 'nestjs-typegoose';
+import { ModelType } from 'typegoose';
 
 import { IUser, IPrivateUser } from '../../interfaces/user.interface';
 
-import { UserCollectionName } from '../../schemas/user.schema';
+import { User } from '../../schemas/user.schema';
 import { GetUsersInput, GetUsersOutput } from '../../dto/get-user';
 
 @Injectable()
 export class GetusersService {
     
     constructor(
-        @InjectModel(UserCollectionName)
-        private readonly userModel: Model<IUser>){}
+        @InjectModel(User)
+        private readonly userModel: ModelType<User>){}
     
-    public async getUser(id:number):Promise<IUser>{
+    public async getUser(id:number):Promise<User>{
         return this.userModel.findOne({_id:id}).exec().then(user => {
             if(user){
                 return user;
