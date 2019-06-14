@@ -42,6 +42,6 @@
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
-    "typegoose": "^5.7.1
+    "typegoose": "^5.7.1"
   }
 }
