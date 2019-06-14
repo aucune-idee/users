@@ -1,4 +1,4 @@
-import { IUser } from '../interfaces/user.interface';
+import { PrivateUser } from '../schemas/user.schema';
 
 export class GetUsersInput{
     start?:number;
@@ -7,6 +7,6 @@ export class GetUsersInput{
 }
 
 export class GetUsersOutput{
-    lobbies:Array<IUser>;
+    lobbies:Array<PrivateUser>;
     hasNext:boolean;
 }

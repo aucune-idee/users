@@ -2,9 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ModelType } from 'typegoose';
 
-import { IUser, IPrivateUser } from '../../interfaces/user.interface';
-
-import { User } from '../../schemas/user.schema';
+import { User, PrivateUser } from '../../schemas/user.schema';
 import { GetUsersInput, GetUsersOutput } from '../../dto/get-user';
 
 @Injectable()
@@ -23,11 +21,11 @@ export class GetusersService {
         });
     }
     
-    public async getUsers(ids:Array<String>):Promise<IPrivateUser[]>{
+    public async getUsers(ids:Array<String>):Promise<Array<PrivateUser>>{
         return this.userModel.find({
             $or:ids.map(i => ({_id:i}))
         })
-        .then(users => {
+        .then((users) => {
             if(users != null && users != undefined){
                 return users.map(user => ({
                     _id:user._id,

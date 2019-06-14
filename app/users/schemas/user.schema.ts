@@ -3,8 +3,6 @@ import { IsString, IsInt } from 'class-validator';
 
 import { AutoIncrement } from '../../shared/schemas/sequence-id';
 
-import { IUser } from '../interfaces/user.interface';
-
 import { EmailUtilsService } from "../../shared/services/email-utils/email-utils.service";
 
 export const UserCollectionName = "User";
@@ -65,4 +63,8 @@ export class User extends Typegoose {
     name: String
   }
 }
+
+interface IUser extends User{}
+
+export type PrivateUser = Pick<IUser, '_id' | 'username' |'createdAt'>;
 

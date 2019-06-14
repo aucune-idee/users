@@ -4,7 +4,6 @@ import { ModelType } from 'typegoose';
 
 import { sign }  from 'jsonwebtoken'
 
-import { IUser } from '../../../interfaces/user.interface';
 import { User } from '../../../schemas/user.schema';
 
 import { PasswordUtilsService } from "../../../../shared/services/password-utils/password-utils.service";

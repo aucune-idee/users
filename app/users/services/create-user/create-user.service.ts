@@ -8,7 +8,6 @@ import { ConfigService } from '../../../config/config.service';
 import { EmailUtilsService } from "../../../shared/services/email-utils/email-utils.service";
 import { PasswordUtilsService } from "../../../shared/services/password-utils/password-utils.service";
 
-import { IUser } from '../../interfaces/user.interface';
 import { User } from '../../schemas/user.schema';
 
 import { CreateUserDto } from '../../dto/create-user';
