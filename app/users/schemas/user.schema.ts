@@ -64,7 +64,7 @@ export class User extends Typegoose {
   }
 }
 
-interface IUser extends User{}
+export interface IUser extends User{}
 
 export type PrivateUser = Pick<IUser, '_id' | 'username' |'createdAt'>;
 
